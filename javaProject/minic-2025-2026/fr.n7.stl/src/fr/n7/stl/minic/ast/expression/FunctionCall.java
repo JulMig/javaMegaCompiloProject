@@ -11,6 +11,7 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.FunctionType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -70,7 +71,13 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in FunctionCall.");
+		boolean ok = this.function.collectAndPartialResolve(_scope);
+		for (AccessibleExpression ae : arguments) {
+			ok &= ae.collectAndPartialResolve(_scope);
+		}
+		return ok;// 	     (\,-,/)
+		// BARBARE MODIFIE    ( >-<) -|==>
+		//throw new SemanticsUndefinedException( "Semantics collect is undefined in FunctionCall.");
 	}
 
 	/* (non-Javadoc)
@@ -78,7 +85,11 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionCall.");
+		boolean ok = this.function.completeResolve(_scope);
+		for (AccessibleExpression ae : arguments) {
+			ok &= ae.completeResolve(_scope);
+		}
+		return ok;//throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionCall.");
 	}
 	
 	/* (non-Javadoc)

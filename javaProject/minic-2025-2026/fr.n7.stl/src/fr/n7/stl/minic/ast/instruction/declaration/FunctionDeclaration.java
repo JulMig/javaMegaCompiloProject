@@ -15,6 +15,7 @@ import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.util.Logger;
 
 /**
  * Abstract Syntax Tree node for a function declaration.
@@ -100,7 +101,17 @@ public class FunctionDeclaration implements DeclarationInstruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in FunctionDeclaration.");
+		
+		if (_scope.accepts(this)) {
+            _scope.register(this);  
+			return this.body.collectAndPartialResolve(_scope);
+        
+		} else {
+              Logger.error("Function : " + this.name + " is already defined.");
+              return false;
+        }
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in FunctionDeclaration.");
 	}
 	
 	@Override
@@ -114,7 +125,10 @@ public class FunctionDeclaration implements DeclarationInstruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionDeclaration.");
+		return this.body.completeResolve(_scope);
+
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionDeclaration.");
 	}
 
 	/* (non-Javadoc)

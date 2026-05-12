@@ -43,7 +43,14 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Return.");
+		boolean ok = this.value.collectAndPartialResolve(_scope);
+		//if (this.function != null) {
+			ok &= this.function.collectAndPartialResolve(_scope);
+		//}
+		return ok;
+
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics collect is undefined in Return.");
 	}
 	
 	/* (non-Javadoc)
@@ -51,7 +58,12 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in Return.");
+		boolean ok = this.value.completeResolve(_scope);
+		ok &= this.function.completeResolve(_scope);
+		return ok;
+
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics resolve is undefined in Return.");
 	}
 	
 	@Override
