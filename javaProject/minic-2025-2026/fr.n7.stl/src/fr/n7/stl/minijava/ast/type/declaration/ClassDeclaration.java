@@ -5,11 +5,13 @@ package fr.n7.stl.minijava.ast.type.declaration;
 
 import java.util.List;
 
+import debug.Debugger;
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -47,7 +49,26 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in ClassDeclaration.");
+		
+		Debugger.print(">>>>>>>>>>>>>>>>>>>>>" + this.name);
+		Debugger.print(_scope.toString());
+
+		if (!_scope.contains(name)) {
+			_scope.register(this);
+			
+			//PENSE AU METHODE ET ATTRIBUT QUE J'AI DECIDE DE PAS GERER ICI !!!!
+	
+ 		} else {
+			return false;
+		}
+		Debugger.print(_scope.toString());
+
+		
+
+		return true;
+		
+		//MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics collect is undefined in ClassDeclaration.");
 	}
 
 	@Override
