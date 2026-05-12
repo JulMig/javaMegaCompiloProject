@@ -1,0 +1,12 @@
+void main() {
+	
+	int tab [] = new int [2];
+	int (* pointeur_de_tab) [] = &tab;
+	
+	tab[0] = 3;
+	print (*pointeur_de_tab)[0];
+	
+	//3
+	
+	
+}

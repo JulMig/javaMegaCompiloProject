@@ -1,0 +1,74 @@
+LOADL 47
+LOADL 53
+LOADA 0[SB]
+LOADI (2)
+POP (0) 1
+LOADA 0[SB]
+LOADI (2)
+POP (1) 1
+;(a * b)
+;((a * b) != test)
+debut_tant_que_1
+LOADA 2[SB]
+LOADI (1)
+LOADA 3[SB]
+LOADI (1)
+SUBR IMul
+LOADL 0
+SUBR INeq
+JUMPIF (0) fin_tant_que_1
+;(a > b)
+LOADA 2[SB]
+LOADI (1)
+LOADA 3[SB]
+LOADI (1)
+SUBR IGtr
+JUMPIF (0) sinon_2
+;(a - b)
+LOADA 2[SB]
+LOADI (1)
+LOADA 3[SB]
+LOADI (1)
+SUBR ISub
+LOADA 4[SB]
+LOADI (1)
+LOADA 2[SB]
+STOREI (1)
+POP (0) 1
+JUMP fin_si_2
+;(b - a)
+sinon_2
+LOADA 3[SB]
+LOADI (1)
+LOADA 2[SB]
+LOADI (1)
+SUBR ISub
+LOADA 4[SB]
+LOADI (1)
+LOADA 3[SB]
+STOREI (1)
+POP (0) 1
+fin_si_2
+POP (0) 0
+JUMP debut_tant_que_1
+fin_tant_que_1
+LOADA 2[SB]
+LOADI (1)
+;(res == test)
+LOADA 4[SB]
+LOADI (1)
+LOADL 0
+SUBR IEq
+JUMPIF (0) fin_si_3
+LOADA 3[SB]
+LOADI (1)
+LOADA 4[SB]
+STOREI (1)
+POP (0) 0
+fin_si_3
+LOADA 4[SB]
+LOADI (1)
+SUBR IOut
+POP (0) 5
+HALT
+

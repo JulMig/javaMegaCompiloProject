@@ -1,0 +1,34 @@
+void main() {
+    
+    //Couple
+    <int, int> p = <3,4>;
+    int h = (fst p);
+    int t = (snd p);
+    
+    //Type primitif
+    //String s = "bonjour";
+    
+    boolean b = true;
+    //float f = 3.0;
+    
+    //Tableau
+    boolean tab[] = new boolean[5];
+    tab[2] = true;
+    boolean bool = tab[2];
+    print tab[2];
+    print bool;
+    
+    //Pointeur
+    //int v = 1;
+    //int *ptr = &v;
+    //*ptr = 2;
+   
+    print h;
+    print t;
+    //print s;
+    print b;
+    //print f;
+    
+    
+    
+}

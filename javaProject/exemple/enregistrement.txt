@@ -1,0 +1,19 @@
+typedef int Entier;
+typedef <Entier, Entier> PaireEntier;
+
+
+
+void main() {
+	Entier i = 1;
+	PaireEntier p = <i, 2>;
+	Entier tab[] = new Entier[5];
+	tab[0] = 3;
+	tab[1] = (fst p);
+	tab[2] = (snd p);
+	Entier *ptr = &i;
+	
+	print (*ptr);
+	print(tab[0]);
+	print(tab[1]);
+	print(tab[2]);
+}

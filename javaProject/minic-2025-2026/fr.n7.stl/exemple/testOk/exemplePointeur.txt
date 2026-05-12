@@ -1,0 +1,22 @@
+typedef int Entier;
+typedef <Entier, Entier> PaireEntier;
+
+void main() {
+
+	//Pointeur
+	int v = 5;
+	int *ptr = &v;
+	print (*ptr); //5
+	*ptr = 6;
+	print v; //6
+	
+	PaireEntier v2 = <8, 9>; //<8, 9>
+    PaireEntier *ptr2 = &v2; //ptr2 -> <8,9>
+    print (fst v2); //8
+    print (snd (*ptr2)); //9
+    *ptr2 = <2, 3>; // v2 -> <2, 3>
+    print (snd v2); //3
+    print (fst (*ptr2)); //2
+	
+	
+}

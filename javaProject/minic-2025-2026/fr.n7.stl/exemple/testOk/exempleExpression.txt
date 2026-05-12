@@ -1,0 +1,16 @@
+void main() {
+
+	//Opération et déclaration de variable
+	int i = 1;
+	int j = 2;
+	i = j + i;
+	
+	print i; //3
+	print j; //2
+	
+	const int AJOUT = 30;
+	
+	i = i - AJOUT;
+	
+	print i; //-27
+}

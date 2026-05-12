@@ -1,0 +1,7 @@
+void main() {
+
+	boolean v = true;
+	boolean *ptr = &v;
+	*ptr = 0;
+
+}

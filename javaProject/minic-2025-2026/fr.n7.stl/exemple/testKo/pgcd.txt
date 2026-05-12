@@ -1,0 +1,28 @@
+void main() {
+
+	<int,int> c = <47,53>;
+	const int test = 0;
+	int a = fst c;
+	int b = snd c;
+	
+	while (a * b != test) {
+		if ( a > b ) {
+			int na = a-b;
+			a = na;
+			print na;
+			print nb;
+		} else {
+			int nb = b-a;
+			b = nb;
+			print na;
+			print nb;
+		}
+	}
+	int res = a;
+	if (res == test) {
+		res = b;
+	}
+	print res ;
+	}
+	
+	

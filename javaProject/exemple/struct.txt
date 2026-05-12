@@ -1,0 +1,8 @@
+void main() {
+
+	struct Pointi {
+		int x;
+		int x;
+	} p = {1, 2};
+	//int i = p.x + p.y;
+}

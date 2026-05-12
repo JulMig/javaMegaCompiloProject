@@ -1,0 +1,42 @@
+LOADL 0
+LOADA 0[SB]
+LOADI (1)
+LOADA 0[SB]
+LOADI (1)
+SUBR IOut
+;(i == 0)
+LOADA 0[SB]
+LOADI (1)
+LOADL 0
+SUBR IEq
+JUMPIF (0) fin_si_1
+;(3 + j)
+LOADL 3
+LOADA 1[SB]
+LOADI (1)
+SUBR IAdd
+LOADA 1[SB]
+STOREI (1)
+POP (0) 0
+fin_si_1
+;(j == 3)
+LOADA 1[SB]
+LOADI (1)
+LOADL 3
+SUBR IEq
+JUMPIF (0) fin_si_2
+;(3 + j)
+LOADL 3
+LOADA 1[SB]
+LOADI (1)
+SUBR IAdd
+LOADA 1[SB]
+STOREI (1)
+POP (0) 0
+fin_si_2
+LOADA 1[SB]
+LOADI (1)
+SUBR IOut
+POP (0) -2
+HALT
+

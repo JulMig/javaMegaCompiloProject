@@ -1,0 +1,17 @@
+void main() {
+    const int LIMITAGE = 18;
+    int age = 17;
+    boolean verif = false;
+    
+    
+    
+    if (age <= LIMITAGE) {
+    	print verif;
+    	verif = true;
+    } else {
+    	verif = false;
+    }
+    
+    print verif;
+    print age;
+}

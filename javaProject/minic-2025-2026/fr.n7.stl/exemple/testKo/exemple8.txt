@@ -1,0 +1,6 @@
+void main() {
+
+	int tab [] = new int [3];
+	tab[1] = true;
+
+}

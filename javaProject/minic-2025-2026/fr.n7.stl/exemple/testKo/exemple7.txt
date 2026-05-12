@@ -1,0 +1,6 @@
+typedef int Entier;
+typedef boolean Entier;
+
+void main() {
+	
+}

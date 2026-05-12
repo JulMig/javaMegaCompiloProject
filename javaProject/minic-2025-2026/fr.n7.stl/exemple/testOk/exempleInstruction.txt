@@ -1,0 +1,41 @@
+void main() {
+
+	//WHILE
+	int tab [] = new int[5];
+	int k = 0;
+	while (k < 5) {
+		k = k+1;
+		int indice = k - 1;
+		tab[indice] = k;
+	}
+	k = 0;
+	while (k<5) {
+		print (tab[k]); //12345
+		k = k+1;
+	}
+	
+	//IF ELSE
+	const int LIMITAGE = 18;
+    	int age = 18;
+    	boolean verif = true;
+    	
+    	if (age < LIMITAGE) {
+		print verif;
+	    	verif = true;
+	} else {
+	    	verif = false;
+	}    
+	print verif; // 0
+	print age; // 18
+	
+	//IF
+	int age2 = 10;
+	if (age2 < LIMITAGE) {
+		print age2; // 10
+		
+		int a = 2;
+		print a; //2
+	}
+	
+	//12345018102
+}

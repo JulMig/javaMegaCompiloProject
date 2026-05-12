@@ -1,0 +1,9 @@
+void main() {
+
+	int i = 3;
+	
+	if (i) {
+		print i;
+	}
+	
+}

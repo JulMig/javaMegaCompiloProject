@@ -1,0 +1,9 @@
+void main() {
+
+	boolean i = true;
+	int j = 2;
+	j = j + i;
+	
+	//erreur de type entre i et j
+	
+}

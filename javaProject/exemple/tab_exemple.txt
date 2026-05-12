@@ -1,0 +1,18 @@
+void main() {
+    int tab[] = new int[3];
+    tab[0] = 111;
+    tab[1] = 555;
+    tab[2] = 666;
+    
+    print tab[0];
+    print tab[1];
+    print tab[2];
+    
+    int i = 22;
+    print i;
+    i = 33;
+    print i;
+    i = tab[0];
+    print i;
+    
+}

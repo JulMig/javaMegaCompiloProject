@@ -1,0 +1,12 @@
+void main() {
+    int k = 0;
+    int p = 0;
+    while ( k < 10 ) {
+    	p = p + 2;
+    	k = k + 1;
+    }
+    
+    print k;
+    print p;
+   
+}

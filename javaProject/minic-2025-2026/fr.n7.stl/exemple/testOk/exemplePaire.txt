@@ -1,0 +1,16 @@
+void main() {
+	
+	//Couple
+	<int, int> p = <3, 4>;
+	print (fst p); //3
+	print (snd p); //4
+	
+	<<int, int>, <<boolean, boolean>, int>> p2 = <p, <<true, false>, 6>>;
+	print (fst (fst p2)); //3
+	print (snd (fst p2)); //4
+	print (snd (fst (snd p2))); //0
+	print (snd (snd p2)); //6
+	
+	//343406
+	
+}
