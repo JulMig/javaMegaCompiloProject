@@ -84,11 +84,6 @@ public class VariableAssignment extends AbstractIdentifier implements Assignable
 				declaration.getRegister(), 
 				declaration.getOffset()));			
 				
-				/*result.add(_factory.createStore(
-				declaration.getRegister(), 
-				declaration.getOffset(), 
-				declaration.getType().length()));
-		*/
 		
 		return result;
 		//MODIFIE

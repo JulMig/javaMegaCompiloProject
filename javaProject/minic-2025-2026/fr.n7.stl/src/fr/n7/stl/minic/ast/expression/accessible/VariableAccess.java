@@ -47,13 +47,7 @@ public class VariableAccess extends AbstractAccess {
 		
 		_result.add(_factory.createLoadI(this.declaration.getType().length()));
 		//throw new SemanticsUndefinedException("Semantics getCode undefined in VariableAssignment.");
-		/*
-		_result.add(_factory.createLoad(
-				this.declaration.getRegister(), 
-				this.declaration.getOffset(),
-				this.declaration.getType().length()));
-		_result.addComment(this.toString());
-		*/
+		//MODIFIE
 		return _result;
 	}
 

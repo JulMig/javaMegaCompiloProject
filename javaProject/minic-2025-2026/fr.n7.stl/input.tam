@@ -7,6 +7,6 @@ SUBR IOut
 LOADA 1[SB]
 LOADI (1)
 SUBR IOut
-POP (0) -2
+POP (0) 3
 HALT
 
