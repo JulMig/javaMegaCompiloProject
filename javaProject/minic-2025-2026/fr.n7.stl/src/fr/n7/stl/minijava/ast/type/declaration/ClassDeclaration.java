@@ -30,6 +30,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 	
 	protected String ancestor;
 
+	protected HierarchicalScope scope;
+
 	/**
 	 * 
 	 */
@@ -49,10 +51,6 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		
-		Debugger.print(">>>>>>>>>>>>>>>>>>>>>" + this.name);
-		Debugger.print(_scope.toString());
-
 		if (!_scope.contains(name)) {
 			_scope.register(this);
 			
@@ -61,10 +59,14 @@ public class ClassDeclaration implements Instruction, Declaration {
  		} else {
 			return false;
 		}
-		Debugger.print(_scope.toString());
+		/* // Laissé à l'allocation pour le moment
+		for(ClassElement c : elements){
 
-		
+			if (c instanceof AttributeDeclaration ad){
 
+			}
+
+		}		*/
 		return true;
 		
 		//MODIFIE
@@ -78,7 +80,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in ClassDeclaration.");
+
+		return true;
+		//MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics resolve is undefined in ClassDeclaration.");
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package fr.n7.stl.minijava.expression;
 
+import debug.Debugger;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;

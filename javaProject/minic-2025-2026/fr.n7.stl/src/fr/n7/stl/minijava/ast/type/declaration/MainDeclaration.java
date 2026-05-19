@@ -2,6 +2,7 @@ package fr.n7.stl.minijava.ast.type.declaration;
 
 import java.util.List;
 
+import debug.Debugger;
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -27,8 +28,18 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		// TODO Auto-generated method stub
-		return false;
+	
+		for(Declaration d : declarations) {
+			
+			if (!_scope.contains(d.getName())) {
+				_scope.register(d);
+				
+			} else {
+				return false;
+			}
+		}
+
+		return this.main.collectAndPartialResolve(_scope);
 	}
 
 	@Override
@@ -40,7 +51,11 @@ public class MainDeclaration implements Instruction {
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+	
+		boolean ok = this.main.completeResolve(_scope);
+		//complete resolve sur le type des décla
+		//MODIFIE
+		return ok;
 	}
 
 	@Override
