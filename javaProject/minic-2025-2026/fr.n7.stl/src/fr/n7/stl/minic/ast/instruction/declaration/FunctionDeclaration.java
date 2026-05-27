@@ -11,6 +11,7 @@ import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
@@ -101,22 +102,63 @@ public class FunctionDeclaration implements DeclarationInstruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		
 		if (_scope.accepts(this)) {
-            _scope.register(this);  
-			return this.body.collectAndPartialResolve(_scope);
+            _scope.register(this);
+			HierarchicalScope<Declaration> _paramScope = new SymbolTable(_scope);
+			for (ParameterDeclaration param : this.parameters) {
+				if (_paramScope.accepts(param)) {
+					_paramScope.register(param);
+					// debug
+					System.out.println(param.name + " registered in parameter scope.");
+				} else {
+					Logger.error("Parameter : " + this.name + " is already defined.");
+              		return false;
+				}
+			}
+			return this.body.collectAndPartialResolve(_paramScope, this);
         
 		} else {
               Logger.error("Function : " + this.name + " is already defined.");
               return false;
         }
 		// MODIFIE
+		//System.out.println("Hello world");
 		//throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in FunctionDeclaration.");
 	}
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+		
+
+		/*for (ParameterDeclaration p : _container.parameters) {
+			if (p.getName().equals(name)) {
+				Logger.error("Function : " + this.name + " is already defined in function parameters.");
+            	return false;
+			}
+		}*/
+
+		if (_scope.accepts(this)) {
+            _scope.register(this);
+			HierarchicalScope<Declaration> _paramScope = new SymbolTable(_scope);
+			for (ParameterDeclaration param : this.parameters) {
+				if (_paramScope.accepts(param)) {
+					_paramScope.register(param);
+					// debug
+					System.out.println(param.name + " registered in parameter scope.");
+				} else {
+					Logger.error("Parameter : " + this.name + " is already defined.");
+              		return false;
+				}
+			}
+			return this.body.collectAndPartialResolve(_paramScope, _container);
+        
+		} else {
+              Logger.error("Function : " + this.name + " is already defined.");
+              return false;
+        }
+
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
 
 	}
 	
@@ -136,7 +178,8 @@ public class FunctionDeclaration implements DeclarationInstruction {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics checkType is undefined in FunctionDeclaration.");
+		return this.body.checkType();
+		//throw new SemanticsUndefinedException( "Semantics checkType is undefined in FunctionDeclaration.");
 	}
 
 	/* (non-Javadoc)
@@ -144,7 +187,9 @@ public class FunctionDeclaration implements DeclarationInstruction {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in FunctionDeclaration.");
+		body.allocateMemory(Register.LB, 0);
+		return _offset;
+		//throw new SemanticsUndefinedException( "Semantics allocateMemory is undefined in FunctionDeclaration.");
 	}
 
 	/* (non-Javadoc)
@@ -152,7 +197,10 @@ public class FunctionDeclaration implements DeclarationInstruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionDeclaration.");
+		Fragment result = this.body.getCode(_factory);
+		result.addPrefix(name);
+		return result;
+		//throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionDeclaration.");
 	}
 
 }

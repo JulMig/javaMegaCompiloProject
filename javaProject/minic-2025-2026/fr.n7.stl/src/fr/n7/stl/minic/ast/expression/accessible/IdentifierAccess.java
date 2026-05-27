@@ -4,9 +4,13 @@
 package fr.n7.stl.minic.ast.expression.accessible;
 
 import fr.n7.stl.minic.ast.expression.AbstractIdentifier;
+
+import java.lang.reflect.Parameter;
+
 import debug.Debugger;
 import fr.n7.stl.minic.ast.expression.AbstractAccess;
 import fr.n7.stl.minic.ast.instruction.declaration.ConstantDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.VariableDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
@@ -59,10 +63,17 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 					this.expression = new ConstantAccess((ConstantDeclaration) _declaration);
 					return true;
 				} else {
-					return false;
+					if (_declaration instanceof ParameterDeclaration) {
+						this.expression = new ParameterAccess((ParameterDeclaration) _declaration);
+						return true;
+					} else {
+						Logger.error("Error : " + this.name + " is not a Constant/Variable/Parameter.");
+						return false;
+					}
 				}
 			}
 		} else {
+			Logger.error("Error : " + this.name + " is unknown.");
 			return false;
 		}
 	}

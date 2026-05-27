@@ -140,11 +140,17 @@ public class Program {
 	public Fragment getCode(TAMFactory _factory) {
 		
 		Fragment f = _factory.createFragment();
+		
+		f.add(_factory.createJump("main"));
+		
 		for (DeclarationInstruction declaration : this.declarations) {
 			f.append(declaration.getCode(_factory));
 		}
-		f.append(this.main.getCode(_factory));
 		
+		Fragment main = this.main.getCode(_factory);
+		main.addPrefix("main");
+		
+		f.append(main);
 		return f;
 		
 		//MODIFIE

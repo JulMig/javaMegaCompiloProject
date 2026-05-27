@@ -73,7 +73,16 @@ public class Conditional implements Instruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Conditional.");
+		boolean ok = true;
+		
+		ok &= this.condition.collectAndPartialResolve(_scope);
+		ok &= this.thenBranch.collectAndPartialResolve(_scope, _container);
+		if (this.elseBranch != null)
+			ok &= this.elseBranch.collectAndPartialResolve(_scope, _container);
+		
+		return ok;
+
+		//throw new SemanticsUndefinedException( "Semantics collect is undefined in Conditional.");
 	}
 	
 	/* (non-Javadoc)
