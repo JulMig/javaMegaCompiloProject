@@ -13,6 +13,7 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -30,7 +31,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 	
 	protected String ancestor;
 
-	protected HierarchicalScope scope;
+	protected HierarchicalScope<Declaration> scope;
 
 	/**
 	 * 
@@ -51,6 +52,9 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+		
+		Debugger.print(">>>>>>>> ClassDeclaration :" + _scope.contains(name) + "  " + name);
+
 		if (!_scope.contains(name)) {
 			_scope.register(this);
 			
@@ -67,6 +71,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 			}
 
 		}		*/
+		Debugger.print(">>>>>>>> ClassDeclaration : return TRUE");
 		return true;
 		
 		//MODIFIE
@@ -86,9 +91,41 @@ public class ClassDeclaration implements Instruction, Declaration {
 		//throw new SemanticsUndefinedException( "Semantics resolve is undefined in ClassDeclaration.");
 	}
 
+
+	/*
+
+	
+		protected List<ClassElement> elements;
+	
+	protected boolean concrete;
+	
+	protected String name;
+	
+	protected String ancestor;
+	
+	*/
+
+
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException( "Semantics check type is undefined in ClassDeclaration.");
+
+		boolean ok = true;
+
+		for (ClassElement ce : elements) {
+			
+			if (ce instanceof ConstructorDeclaration cd) {
+				ok &= cd.checkType();
+			} else if (ce instanceof MethodDeclaration md) {
+				ok &= md.checkType();
+			}
+		}
+
+		System.out.println(ok);
+
+		return ok;
+		
+		//MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics check type is undefined in ClassDeclaration.");
 	}
 
 	@Override
@@ -108,8 +145,7 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ClassType(name);
 	}
 	
 	@Override
@@ -128,6 +164,39 @@ public class ClassDeclaration implements Instruction, Declaration {
 		}
 		image += "}\n";
 		return image;
+	}
+
+
+	//////////////////////////////////////////FCT UTILITAIRES/////////////////////
+	public boolean constructorExist(Type ... types)  {
+
+		boolean ok = false;
+		for (ClassElement elem : elements) {
+			if (elem instanceof ConstructorDeclaration cd) {
+
+				ok |= cd.compatibleWith(types); 
+
+			}
+			
+		}
+
+		return ok;
+	}
+
+	public boolean getMethods(String name, Type ... types)  {
+
+		boolean ok = false;
+		for (ClassElement elem : elements) {
+			if (elem instanceof MethodDeclaration cd) {
+				if (elem.getName().equals(name)){
+					ok |= cd.compatibleWith(types); 
+				}
+
+			}
+			
+		}
+
+		return ok;
 	}
 
 }

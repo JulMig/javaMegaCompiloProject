@@ -3,6 +3,7 @@ package fr.n7.stl.minijava.expression;
 import java.util.Iterator;
 import java.util.List;
 
+import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
@@ -37,20 +38,46 @@ public abstract class AbstractMethodCall <ObjectKind extends Expression> impleme
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		// TODO Auto-generated method stub
-		return false;
+		//System.out.println(">>>>>>>>>>>>" + target.toString() + " " + name);
+		
+		boolean ok = true;
+		
+		if (target != null){
+			ok &= this.target.collectAndPartialResolve(_scope);
+
+		}
+
+		for (AccessibleExpression a : arguments) {
+			ok &= a.collectAndPartialResolve(_scope);
+		}
+
+		System.out.println("HHHHHHHHHHHHHHHHHHHHHEEEEEEEE " + ok);
+
+		return ok;
+
+		//MODIFIE
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean ok = true;
+		if (target != null){
+			ok &= this.target.completeResolve(_scope);
+
+		}
+
+		for (AccessibleExpression a : arguments) {
+			ok &= a.completeResolve(_scope);
+		}
+		return ok;
+		//MODIFIE
 	}
 
 	@Override
 	public Type getType() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException( "AbstractMethodCall getType");
+		//return null;
 	}
 	
 	@Override

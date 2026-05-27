@@ -71,6 +71,7 @@ public class Block {
 		boolean ok = true;
         for (Instruction instruction : this.instructions) {
             ok &= instruction.collectAndPartialResolve(_block_scope);
+			Debugger.print("Block :" + ok + " " + instruction.getClass());
         }
         return ok;
 	//	throw new SemanticsUndefinedException("Semantics collect is undefined in Block.");
@@ -101,6 +102,7 @@ public class Block {
             boolean ok = true;
             for (Instruction instruction : this.instructions) {
                 ok &= instruction.completeResolve(_block_scope);
+				Debugger.print(("Resolve Block : " + ok + " " + instruction.getClass().getName()));
             }
             return ok;
 	    // throw new SemanticsUndefinedException("Semantics completeResolve is undefined in Block.");

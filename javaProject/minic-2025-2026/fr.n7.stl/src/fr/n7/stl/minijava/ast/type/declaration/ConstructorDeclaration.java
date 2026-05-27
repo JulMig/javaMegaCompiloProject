@@ -7,6 +7,7 @@ import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.minijava.ast.type.ClassType;
 
 public class ConstructorDeclaration extends ClassElement {
 	
@@ -40,7 +41,28 @@ public class ConstructorDeclaration extends ClassElement {
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ClassType(name);
 	}
+
+	public boolean compatibleWith(Type ... types) {
+		boolean ok = types.length  == parameters.size();
+
+		for (int i = 0; i  < types.length; i++) {
+			ok &= types[i].compatibleWith(parameters.get(i).getType());
+		}
+
+
+		return ok;
+
+
+	}
+
+	
+	public boolean checkType() {
+
+		//return body.checkType();
+		return true;
+
+	}
+
 }

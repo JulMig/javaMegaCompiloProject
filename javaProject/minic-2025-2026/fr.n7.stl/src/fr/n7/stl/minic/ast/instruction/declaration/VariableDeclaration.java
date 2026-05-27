@@ -115,8 +115,10 @@ public class VariableDeclaration implements DeclarationInstruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
             
+		Debugger.print("Variable Declaration :" + _scope.accepts(this));
 		if (_scope.accepts(this)) {
                 _scope.register(this);
+				Debugger.print("Variable Declaration :" + value.getClass());
                 return this.value.collectAndPartialResolve(_scope);
             } else {
                 Logger.error("Variable : " + this.name + " is already defined.");
@@ -146,6 +148,7 @@ public class VariableDeclaration implements DeclarationInstruction {
 	@Override
 	public boolean checkType() {
 
+		//System.out.println(">>>>>>>>>>>>" + this.value.getClass());
 		
 		return this.type.compatibleWith(this.value.getType());
 		//MODIFIE

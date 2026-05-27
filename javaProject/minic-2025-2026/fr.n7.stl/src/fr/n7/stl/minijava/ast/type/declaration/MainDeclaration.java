@@ -29,8 +29,10 @@ public class MainDeclaration implements Instruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 	
+		Debugger.print(">>>>>>>> MainDeclaration :  " + name);
+
 		for(Declaration d : declarations) {
-			
+			Debugger.print(">>>>>>>> MainDeclaration :  " +_scope.contains(d.getName()) + " " +d.getName());
 			if (!_scope.contains(d.getName())) {
 				_scope.register(d);
 				
@@ -39,6 +41,7 @@ public class MainDeclaration implements Instruction {
 			}
 		}
 
+		Debugger.print("-------------------\n"+_scope.toString()+"-------------------\n");
 		return this.main.collectAndPartialResolve(_scope);
 	}
 
@@ -53,6 +56,10 @@ public class MainDeclaration implements Instruction {
 		// TODO Auto-generated method stub
 	
 		boolean ok = this.main.completeResolve(_scope);
+		Debugger.print("Resolve MainDeclaration : " + ok);
+		for (Declaration d : declarations) {
+			ok &= d.getType().completeResolve(_scope);
+		}
 		//complete resolve sur le type des décla
 		//MODIFIE
 		return ok;
@@ -61,7 +68,7 @@ public class MainDeclaration implements Instruction {
 	@Override
 	public boolean checkType() {
 		// TODO Auto-generated method stub
-		return false;
+		return main.checkType();
 	}
 
 	@Override

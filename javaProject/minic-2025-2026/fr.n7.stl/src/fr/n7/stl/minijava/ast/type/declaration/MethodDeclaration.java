@@ -58,8 +58,28 @@ public class MethodDeclaration  extends ClassElement {
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
+	}
+
+	public boolean compatibleWith(Type ... types) {
+		boolean ok = types.length  == parameters.size();
+
+		for (int i = 0; i  < types.length; i++) {
+			ok &= types[i].compatibleWith(parameters.get(i).getType());
+		}
+
+
+		return ok;
+
+
+	}
+
+	
+	public boolean checkType() {
+
+		//return body.checkType();
+		return true;
+
 	}
 
 }
