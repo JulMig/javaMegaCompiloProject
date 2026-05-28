@@ -6,6 +6,7 @@ package fr.n7.stl.minic.ast.scope;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 /**
  * Implementation of a hierarchical scope using maps.
@@ -96,14 +97,33 @@ public class SymbolTable implements HierarchicalScope<Declaration> {
 	@Override
 	public String toString() {
 		String _local = "";
-		if (this.context != null) {
+		/*if (this.context != null) {
 			_local += "Hierarchical definitions :\n" + this.context.toString();
-		}
+		}*/
 		_local += "Local definitions : ";
 		for (Entry<String,Declaration> _entry : this.declarations.entrySet()) {
 			_local += _entry.getKey() + " -> " + _entry.getValue().toString() + "\n";
 		}
 		return _local;
+	}
+
+
+	// rajouté par moi
+	public void enregistre(String name, Declaration content) {
+		this.declarations.put(name, content);
+	} 
+
+	public Optional<SymbolTable> getContext(String name) {
+		if (this.context == null) {
+			return Optional.empty();
+		} 
+
+		SymbolTable context = (SymbolTable) this.context;
+		
+		if (!(context.contains(name))) {
+			context = context.getContext(name).get();
+		} 
+		return Optional.ofNullable(context);
 	}
 
 }

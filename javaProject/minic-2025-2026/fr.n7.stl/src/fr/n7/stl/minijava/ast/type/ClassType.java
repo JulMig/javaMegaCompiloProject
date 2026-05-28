@@ -52,7 +52,8 @@ public class ClassType implements Type {
 	}
 	
 	public String toString() {
-		return " " + this.name + " ";
+		// modifie
+		return "" + this.name + "";
 	}
 
 	public String getName() {

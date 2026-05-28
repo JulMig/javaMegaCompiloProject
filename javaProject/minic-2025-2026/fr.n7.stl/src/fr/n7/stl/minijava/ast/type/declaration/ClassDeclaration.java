@@ -3,6 +3,7 @@
  */
 package fr.n7.stl.minijava.ast.type.declaration;
 
+import java.lang.reflect.Parameter;
 import java.util.List;
 
 import debug.Debugger;
@@ -58,21 +59,19 @@ public class ClassDeclaration implements Instruction, Declaration {
 		if (!_scope.contains(name)) {
 			_scope.register(this);
 			
+			
+			boolean ok = true;
+			for (ClassElement elem : elements) {
+				if (elem instanceof MethodDeclaration cd) {
+					ok &= cd.collectAndPartialResolve(_scope, this);
+				}
+			}
+			return ok;
 			//PENSE AU METHODE ET ATTRIBUT QUE J'AI DECIDE DE PAS GERER ICI !!!!
 	
  		} else {
 			return false;
 		}
-		/* // Laissé à l'allocation pour le moment
-		for(ClassElement c : elements){
-
-			if (c instanceof AttributeDeclaration ad){
-
-			}
-
-		}		*/
-		Debugger.print(">>>>>>>> ClassDeclaration : return TRUE");
-		return true;
 		
 		//MODIFIE
 		//throw new SemanticsUndefinedException( "Semantics collect is undefined in ClassDeclaration.");
@@ -85,8 +84,19 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+		Debugger.print(">>>>>>>> ClassDeclaration :" + _scope.contains(name) + "  " + name);
 
-		return true;
+		
+		boolean ok = true;
+		for (ClassElement elem : elements) {
+			if (elem instanceof MethodDeclaration cd) {
+				ok &= cd.completeResolve(_scope);
+			}
+			
+		}
+		return ok;
+			//PENSE AU METHODE ET ATTRIBUT QUE J'AI DECIDE DE PAS GERER ICI !!!
+		//return true;
 		//MODIFIE
 		//throw new SemanticsUndefinedException( "Semantics resolve is undefined in ClassDeclaration.");
 	}
@@ -130,12 +140,44 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException( "Semantics allocation memory is undefined in ClassDeclaration.");
+		
+		int taille = 0;
+
+		for (ClassElement cle : elements) {
+			if (cle instanceof AttributeDeclaration cd) {
+				taille += cd.getType().length();
+			}
+		}
+
+		return _offset + taille;
+		//throw new SemanticsUndefinedException( "Semantics allocation memory is undefined in ClassDeclaration.");
 	}
 
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics get code is undefined in ClassDeclaration.");
+		
+		Fragment f = _factory.createFragment();
+		
+		for (ClassElement elem : elements) {
+			int num = _factory.createLabelNumber();
+			Fragment tmp = _factory.createFragment();
+			if (elem instanceof MethodDeclaration cd) {
+				tmp.append(cd.getBody().getCode(_factory));
+				tmp.addPrefix(this.name + "_" + cd.getName()+"_"+num);
+				f.append(tmp);
+				cd.setLabel(this.name + "_" + cd.getName()+"_"+num);
+			} else if (elem instanceof ConstructorDeclaration cd) {
+				tmp.append(cd.getBody().getCode(_factory));
+				tmp.addPrefix(this.name +"_"+num);
+				f.append(tmp);
+				cd.setLabel(this.name +"_"+num);
+			}
+			
+		}
+		
+		return f;
+		
+		//throw new SemanticsUndefinedException( "Semantics get code is undefined in ClassDeclaration.");
 	}
 
 	@Override
@@ -197,6 +239,18 @@ public class ClassDeclaration implements Instruction, Declaration {
 		}
 
 		return ok;
+	}
+
+	public AttributeDeclaration getAttribute(String name) {
+		for (ClassElement cle : elements) {
+			if (cle instanceof AttributeDeclaration cd) {
+				if (cd.getName().equals(name)){
+					return cd;
+				}
+
+			}
+		}
+		return null;
 	}
 
 }

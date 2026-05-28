@@ -30,7 +30,7 @@ public class MethodCallAssignment extends AbstractMethodCall<AssignableExpressio
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("JE SUIS LA");
 		throw new SemanticsUndefinedException( "Semantics getCode is undefined in MethodCallAssignment.");
 		//return null;
 	}

@@ -156,9 +156,10 @@ public class Block {
 	 * @return Synthesized AST for the generated TAM code.
 	 */
 	public Fragment getCode(TAMFactory _factory) {
-		
+
 		Fragment f = _factory.createFragment();
 		for (Instruction ins : instructions) {
+			System.out.println("<<<<<<<< Instruction : " + ins.getClass());
 			f.append(ins.getCode(_factory));
 		}
 		

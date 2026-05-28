@@ -15,10 +15,24 @@ public class ConstructorDeclaration extends ClassElement {
 	
 	protected Block body;
 
+	protected String label;
+
 	public ConstructorDeclaration(String _name, List<ParameterDeclaration> _parameters, Block _body) {
 		super( _name);
 		this.parameters = _parameters;
 		this.body = _body;
+	}
+
+	public Block getBody() {
+		return body;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getLabel() {
+		return label;
 	}
 
 	@Override

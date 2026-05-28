@@ -52,9 +52,10 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+		System.out.println("DEDANS collect !!!");
 		if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
 			Declaration _declaration = _scope.get(this.name);
-
+			System.out.println("Declaration :" + _declaration.getName() + " : " + _declaration.getClass().toString());
 			if (_declaration instanceof VariableDeclaration) {
 				this.expression = new VariableAccess((VariableDeclaration) _declaration);
 				return true;
@@ -84,6 +85,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+		System.out.println("DEDANS complete !!!");
 		if (this.expression == null) {
 			if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
 				Declaration _declaration = _scope.get(this.name);
@@ -118,6 +120,8 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
+		System.out.println("Expression :" + expression.toString());
+		
 		return this.expression.getCode(_factory);
 	}
 
