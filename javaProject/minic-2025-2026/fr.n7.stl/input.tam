@@ -38,6 +38,10 @@ SUBR IOut
 LOADA 1[SB]
 LOADI (1)
 SUBR IOut
+<<<<<<< HEAD
 POP (0) 2
+=======
+POP (0) 3
+>>>>>>> jjb
 HALT
 

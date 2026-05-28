@@ -19,6 +19,8 @@ void main() {
     print i;
     int j = test(i);
     
+    float f = 2.0;
+    
     print i;
     print j;
     

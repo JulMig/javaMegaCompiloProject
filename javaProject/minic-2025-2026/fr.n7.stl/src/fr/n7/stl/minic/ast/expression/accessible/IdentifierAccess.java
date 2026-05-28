@@ -54,6 +54,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		if (((HierarchicalScope<Declaration>)_scope).knows(this.name)) {
 			Declaration _declaration = _scope.get(this.name);
+
 			if (_declaration instanceof VariableDeclaration) {
 				this.expression = new VariableAccess((VariableDeclaration) _declaration);
 				return true;
@@ -108,6 +109,7 @@ public class IdentifierAccess extends AbstractIdentifier implements AccessibleEx
 	 */
 	@Override
 	public Type getType() {
+		System.out.println("EXPRESSION :" + this.expression + " " + this.name);
 		return this.expression.getType();
 	}
 
