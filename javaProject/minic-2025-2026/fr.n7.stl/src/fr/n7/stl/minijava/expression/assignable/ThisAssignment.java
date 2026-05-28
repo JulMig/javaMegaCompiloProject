@@ -8,7 +8,6 @@ import fr.n7.stl.tam.ast.TAMFactory;
 public class ThisAssignment extends AbstractThis<AssignableExpression> implements AssignableExpression {
 
 	public ThisAssignment() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
