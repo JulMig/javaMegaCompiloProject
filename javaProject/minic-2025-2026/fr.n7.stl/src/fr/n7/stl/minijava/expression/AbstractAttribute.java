@@ -21,7 +21,7 @@ public abstract class AbstractAttribute <ObjectKind extends Expression> implemen
 		this.object = _object;
 		this.name = _name;
 
-		//System.out.println("NAME :       " + _name + " " + object.getClass());
+		System.out.println("NAME :       " + _name + " " + object.getClass());
 	}
 
 	@Override
