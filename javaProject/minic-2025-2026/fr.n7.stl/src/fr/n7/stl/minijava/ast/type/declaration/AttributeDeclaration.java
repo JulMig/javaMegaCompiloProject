@@ -6,6 +6,8 @@ public class AttributeDeclaration extends ClassElement {
 	
 	protected Type type;
 
+	private int pos;
+
 	public AttributeDeclaration( String _name, Type _type) {
 		super(_name);
 		this.type = _type;
@@ -19,5 +21,13 @@ public class AttributeDeclaration extends ClassElement {
 	@Override
 	public String toString() {
 		return this.accessRight + " " + type + " " + this.name + ";\n"; 
+	}
+
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
+
+	public int getPos() {
+		return pos;
 	}
 }

@@ -16,9 +16,13 @@ public class ThisAssignment extends AbstractThis<AssignableExpression> implement
 
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		// TODO Auto-generated method stub
 		
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ThisAssignment.");
+		Fragment f =  _factory.createFragment();
+		f.add(_factory.createLoadL(this.content.getOffset()));
+		//ADRESSE DE LA CLASSE
+		return f;
+		
+		//throw new SemanticsUndefinedException( "Semantics getCode is undefined in ThisAssignment.");
 		//return null;
 	}
 

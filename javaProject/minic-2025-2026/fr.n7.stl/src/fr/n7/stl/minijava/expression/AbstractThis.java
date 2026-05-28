@@ -15,7 +15,7 @@ import fr.n7.stl.util.Logger;
 
 public abstract class AbstractThis <ObjectKind extends Expression> implements Expression {
 
-	private ClassDeclaration content;
+	protected ClassDeclaration content;
 
 	public AbstractThis() {
 		// TODO Auto-generated constructor stub
@@ -48,6 +48,7 @@ public abstract class AbstractThis <ObjectKind extends Expression> implements Ex
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
 		//throw new UnsupportedOperationException("Unimplemented method 'completeResolve'");
+		return true;
 	}
 
 	@Override

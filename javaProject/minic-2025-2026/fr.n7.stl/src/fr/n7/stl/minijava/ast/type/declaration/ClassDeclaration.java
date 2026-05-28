@@ -16,6 +16,7 @@ import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
@@ -33,6 +34,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 	protected String ancestor;
 
 	protected HierarchicalScope<Declaration> scope;
+
+	protected int offset;
+
+	protected int lenght;
 
 	/**
 	 * 
@@ -140,14 +145,20 @@ public class ClassDeclaration implements Instruction, Declaration {
 
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		
+
+		this.offset = _offset;
+
 		int taille = 0;
 
 		for (ClassElement cle : elements) {
 			if (cle instanceof AttributeDeclaration cd) {
-				taille += cd.getType().length();
+				cd.setPos(taille);
+				taille += 1; //TAILLE DE L'ADRESSE DES ATTRIBUTS
+				
 			}
 		}
+
+		this.lenght = taille;
 
 		return _offset + taille;
 		//throw new SemanticsUndefinedException( "Semantics allocation memory is undefined in ClassDeclaration.");
@@ -158,6 +169,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 		
 		Fragment f = _factory.createFragment();
 		
+		//MALOC POUR LES ADRESSES DES ATTRIBUTS
+		f.add(_factory.createLoadL(this.lenght));
+		f.add(Library.MAlloc);
+
 		for (ClassElement elem : elements) {
 			int num = _factory.createLabelNumber();
 			Fragment tmp = _factory.createFragment();
@@ -251,6 +266,14 @@ public class ClassDeclaration implements Instruction, Declaration {
 			}
 		}
 		return null;
+	}
+
+	public int getLenght() {
+		return lenght;
+	}
+
+	public int getOffset() {
+		return offset;
 	}
 
 }
