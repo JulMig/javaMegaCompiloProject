@@ -1,5 +1,6 @@
 package fr.n7.stl.minijava.expression.assignable;
 
+import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minijava.expression.AbstractThis;
 import fr.n7.stl.tam.ast.Fragment;
@@ -13,7 +14,9 @@ public class ThisAssignment extends AbstractThis<AssignableExpression> implement
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ThisAssignment.");
+		//return null;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import debug.Debugger;
 import fr.n7.stl.minic.ast.Block;
+import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -48,7 +49,8 @@ public class MainDeclaration implements Instruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics collect and partial resolve is undefined in MainDeclaration.");
+		//return false;
 	}
 
 	@Override
@@ -80,7 +82,8 @@ public class MainDeclaration implements Instruction {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ClassDeclaration.");
+		//return null;
 	}
 	
 	public String getName() {

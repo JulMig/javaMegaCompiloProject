@@ -15,13 +15,15 @@ public abstract class AbstractThis <ObjectKind extends Expression> implements Ex
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics collect and partial resolve is undefined in AbstractThis.");
+		//return false;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics complete resolve is undefined in AbstractThis.");
+		//return false;
 	}
 
 	@Override

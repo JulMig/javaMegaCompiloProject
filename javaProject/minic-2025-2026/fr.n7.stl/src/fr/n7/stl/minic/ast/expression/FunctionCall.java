@@ -3,6 +3,7 @@
  */
 package fr.n7.stl.minic.ast.expression;
 
+import java.security.InvalidParameterException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,8 +12,10 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.FunctionType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 
 /**
@@ -70,7 +73,28 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in FunctionCall.");
+		//System.out.println(_scope.toString());
+		//System.out.println(name + " est dedans ? " + Boolean.toString(_scope.knows(name)));
+		
+		if (_scope.knows(name)) { 
+			if (this.function == null) {
+				try { 
+					//System.out.println("DEBUG !!!");
+					this.function = (FunctionDeclaration) _scope.get(name);
+					System.out.println(this.function.getName());
+				} catch (Exception e) {
+					System.err.println("Exception occured : " + name + " is not a function !");;
+					return false;
+				}  			
+			} //else {System.out.println("BONJOUR LE MONDE :!");} 
+			boolean ok = true; //this.function.collectAndPartialResolve(_scope);
+			for (AccessibleExpression ae : arguments) {
+				ok &= ae.collectAndPartialResolve(_scope);
+			}
+			return ok;
+		} else {
+			throw new InvalidParameterException("Function : " + name + " is undefined !");
+		} 	
 	}
 
 	/* (non-Javadoc)
@@ -78,7 +102,11 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionCall.");
+		boolean ok = true;//this.function.completeResolve(_scope);
+		for (AccessibleExpression ae : arguments) {
+			ok &= ae.completeResolve(_scope);
+		}
+		return ok;//throw new SemanticsUndefinedException( "Semantics resolve is undefined in FunctionCall.");
 	}
 	
 	/* (non-Javadoc)
@@ -86,7 +114,8 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public Type getType() {
-		throw new SemanticsUndefinedException( "Semantics getType is undefined in FunctionCall.");
+		return this.function.getType();
+		//throw new SemanticsUndefinedException( "Semantics getType is undefined in FunctionCall.");
 	}
 
 	/* (non-Javadoc)
@@ -94,7 +123,17 @@ public class FunctionCall implements AccessibleExpression {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionCall.");
+
+		Fragment f = _factory.createFragment();
+
+		for (AccessibleExpression a : arguments) {
+			f.append(a.getCode(_factory));
+		}
+
+		f.add(_factory.createCall(name, Register.LB));
+
+		return f;
+		//throw new SemanticsUndefinedException( "Semantics getCode is undefined in FunctionCall.");
 	}
 
 }

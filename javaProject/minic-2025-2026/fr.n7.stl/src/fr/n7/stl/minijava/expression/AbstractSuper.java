@@ -15,13 +15,15 @@ public abstract class AbstractSuper  <ObjectKind extends Expression> implements 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics collect and partial resolve is undefined in AbstractSuper.");
+		//return false;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics complete resolve is undefined in AbstractSuper.");
+		//return false;
 	}
 
 	@Override

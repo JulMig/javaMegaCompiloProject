@@ -1,9 +1,27 @@
+int test(int a) {
+    const int g = 10;
+    int b = 8;
+    
+    if (a + b < g) {
+        return a + 3;
+    }
+    return 43;
+}
+
+/*int test2(boolean b) {
+    int b = 0;
+    return b;
+}*/
+
 void main() {
-    int i = 0;
-    int j = i;
+        
+    int i = -2;
+    print i;
+    int j = test(i);
     
     float f = 2.0;
     
     print i;
     print j;
+    
 }

@@ -3,13 +3,22 @@
  */
 package fr.n7.stl.minic.ast.instruction;
 
+import java.beans.ParameterDescriptor;
+import java.lang.reflect.Parameter;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.antlr.v4.parse.ANTLRParser.terminal_return;
+import org.stringtemplate.v4.compiler.CodeGenerator.region_return;
 
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.type.FunctionType;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
@@ -43,7 +52,10 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Return.");
+		boolean ok = this.value.collectAndPartialResolve(_scope);
+		return ok;
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics collect is undefined in Return.");
 	}
 	
 	/* (non-Javadoc)
@@ -51,16 +63,17 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in Return.");
+		boolean ok = this.value.completeResolve(_scope);
+		return ok;
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics resolve is undefined in Return.");
 	}
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		if (this.function == null) {
 			this.function = _container;		
-		} else {
-			throw new InvalidParameterException("Trying to set a function declaration to a return instruction when one has already been set.");
-		}
+		} //else { throw new InvalidParameterException("Trying to set a function declaration to a return instruction when one has already been set.");}
 		return this.collectAndPartialResolve(_scope);
 	}
 
@@ -69,7 +82,9 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public boolean checkType() {
-		throw new SemanticsUndefinedException("Semantics checkType undefined in Return.");
+		return this.value.getType().compatibleWith(this.function.getType());
+		// MODIFIE
+		//throw new SemanticsUndefinedException("Semantics checkType undefined in Return.");
 	}
 
 	/* (non-Javadoc)
@@ -77,7 +92,8 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public int allocateMemory(Register _register, int _offset) {
-		throw new SemanticsUndefinedException("Semantics allocateMemory undefined in Return.");
+		return _offset;
+		//throw new SemanticsUndefinedException("Semantics allocateMemory undefined in Return.");
 	}
 
 	/* (non-Javadoc)
@@ -85,7 +101,18 @@ public class Return implements Instruction {
 	 */
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException("Semantics getCode undefined in Return.");
+		Fragment f = _factory.createFragment();
+		
+		int taille_param = 0;
+		for (ParameterDeclaration p : this.function.getParameters()) {
+			taille_param += p.getType().length();
+		}
+
+		f.append(value.getCode(_factory));
+		f.add(_factory.createReturn(value.getType().length(), taille_param));
+		
+		return f;
+		//throw new SemanticsUndefinedException("Semantics getCode undefined in Return.");
 	}
 
 }

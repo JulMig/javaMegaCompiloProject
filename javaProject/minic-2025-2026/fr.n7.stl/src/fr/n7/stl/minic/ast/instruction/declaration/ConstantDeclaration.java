@@ -85,13 +85,13 @@ public class ConstantDeclaration implements DeclarationInstruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		
-		  if (_scope.accepts(this)) {
-              _scope.register(this);
-              return this.value.collectAndPartialResolve(_scope);
-          } else {
-              Logger.error("Constant : " + this.name + " is already defined.");
-              return false;
-          }
+		if (_scope.accepts(this)) {
+            _scope.register(this);
+            return this.value.collectAndPartialResolve(_scope);
+        } else {
+            Logger.error("Constant : " + this.name + " is already defined.");
+            return false;
+        }
 		
 		//MODIFIE
 		//throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
@@ -99,8 +99,18 @@ public class ConstantDeclaration implements DeclarationInstruction {
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+		
+		if (_scope.knows(name)) {Logger.error(this.name + " is already defined."); return false;}
 
+		if (_scope.accepts(this)) {
+              _scope.register(this);
+              return this.value.collectAndPartialResolve(_scope);
+        } else {
+              Logger.error(this.name + " is already defined.");
+              return false;
+        }
+
+		// MODIFIE
 	}
 	
 	/* (non-Javadoc)

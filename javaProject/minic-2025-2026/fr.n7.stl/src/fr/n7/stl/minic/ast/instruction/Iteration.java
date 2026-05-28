@@ -54,7 +54,13 @@ public class Iteration implements Instruction {
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in Iteration.");
+		
+		boolean ok = this.condition.collectAndPartialResolve(_scope);
+		ok &= this.body.collectAndPartialResolve(_scope, _container);
+		
+		return ok;
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics collect is undefined in Iteration.");
 	}
 	
 	/* (non-Javadoc)

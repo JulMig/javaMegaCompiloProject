@@ -34,7 +34,18 @@ public class FunctionType implements Type {
 	 */
 	@Override
 	public boolean equalsTo(Type _other) {
-		throw new SemanticsUndefinedException( "equalsTo is undefined in FunctionType.");
+		if (_other instanceof FunctionType) {
+			FunctionType autre = (FunctionType) _other;
+			boolean ok = this.result.equalsTo(autre.result);
+			for (int i = 0; i < this.parameters.size(); i++) {
+				ok &= this.parameters.get(i).equals(autre.parameters.get(i));
+			}
+			return ok;
+		} else {
+			return false;
+		}
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "equalsTo is undefined in FunctionType.");
 	}
 
 	/* (non-Javadoc)
@@ -42,7 +53,18 @@ public class FunctionType implements Type {
 	 */
 	@Override
 	public boolean compatibleWith(Type _other) {
-		throw new SemanticsUndefinedException( "compatibleWith is undefined in FunctionType.");
+		if (_other instanceof FunctionType) {
+			FunctionType autre = (FunctionType) _other;
+			boolean ok = this.result.compatibleWith(autre.result);
+			for (int i = 0; i < this.parameters.size(); i++) {
+				ok &= this.parameters.get(i).compatibleWith(autre.parameters.get(i));
+			}
+			return ok;
+		} else {
+			return false;
+		}
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "compatibleWith is undefined in FunctionType.");
 	}
 
 	/* (non-Javadoc)

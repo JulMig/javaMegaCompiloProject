@@ -64,7 +64,19 @@ public class TypeDeclaration implements DeclarationInstruction {
 	
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
+		
+		if (_scope.knows(name)) {Logger.error(this.name + " is already defined."); return false;}
+
+		if (_scope.accepts(this)) {
+			_scope.register(this);
+			return true;
+		} else {
+			Logger.error("TypeDeclaration : " + this.name + " is already defined.");
+			return false;
+		}
+		
+		// MODIFIE
+		//throw new SemanticsUndefinedException( "Semantics collectAndPartialResolve is undefined in ConstantDeclaration.");
 
 	}
 
