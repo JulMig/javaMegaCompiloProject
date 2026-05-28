@@ -41,7 +41,8 @@ public class AttributeAccess extends AbstractAttribute<AccessibleExpression>  im
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException( "Semantics getCode is undefined in AttributeAccess.");
+		//return null;
 	}
 
 }

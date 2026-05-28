@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import debug.Debugger;
+import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.expression.assignable.AssignableExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
@@ -71,7 +72,9 @@ public class ObjectAllocation  implements AccessibleExpression, AssignableExpres
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ObjectAllocation.");
+		//return null;
 	}
 	
 	@Override

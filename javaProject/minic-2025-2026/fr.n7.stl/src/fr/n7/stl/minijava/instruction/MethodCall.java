@@ -3,6 +3,7 @@ package fr.n7.stl.minijava.instruction;
 import java.util.Iterator;
 import java.util.List;
 
+import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -38,7 +39,7 @@ public class MethodCall implements Instruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
+		/*System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" );
 		System.out.println(_scope);
 		System.out.println(target.getClass());
 		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -46,28 +47,31 @@ public class MethodCall implements Instruction {
 		// TODO Auto-generated method stub
 		if (this.target != null) {
 			
-		}
+		}*/
 
-
-		return false;
+		throw new SemanticsUndefinedException( "Semantics collect and partial resolve is undefined in MethodCall.");
+		//return false;
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics collect and partial resolve is undefined in MethodCall.");
+		//return false;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics complete resolve is undefined in MethoCall.");
+		//return false;
 	}
 
 	@Override
 	public boolean checkType() {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics checkType is undefined in MethoCall.");
+		//return false;
 	}
 
 	@Override
@@ -79,7 +83,8 @@ public class MethodCall implements Instruction {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException( "Semantics getCode is undefined in MethoCall.");
+		//return null;
 	}
 	
 	@Override

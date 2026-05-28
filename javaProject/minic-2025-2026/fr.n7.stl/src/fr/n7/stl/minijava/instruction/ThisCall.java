@@ -3,6 +3,7 @@ package fr.n7.stl.minijava.instruction;
 import java.util.Iterator;
 import java.util.List;
 
+import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.Instruction;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -28,25 +29,29 @@ public class ThisCall implements Instruction {
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics collect and partial resolve is undefined in ThisCall.");
+		//return false;
 	}
 
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics collect and partial resolve is undefined in ThisCall.");
+		//return false;
 	}
 
 	@Override
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics complete resolve is undefined in ThisCall.");
+		//return false;
 	}
 
 	@Override
 	public boolean checkType() {
 		// TODO Auto-generated method stub
-		return false;
+		throw new SemanticsUndefinedException( "Semantics checkType is undefined in ThisCall.");
+		//return false;
 	}
 
 	@Override
@@ -58,7 +63,8 @@ public class ThisCall implements Instruction {
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ThisCall.");
+		//return null;
 	}
 	
 	@Override
