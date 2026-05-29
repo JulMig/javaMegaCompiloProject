@@ -6,8 +6,12 @@ import java.util.List;
 import fr.n7.stl.minic.ast.Block;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
+import fr.n7.stl.minic.ast.scope.Declaration;
+import fr.n7.stl.minic.ast.scope.HierarchicalScope;
+import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
+import fr.n7.stl.util.Logger;
 
 public class ConstructorDeclaration extends ClassElement {
 	
@@ -78,5 +82,42 @@ public class ConstructorDeclaration extends ClassElement {
 		return true;
 
 	}
+
+
+	// rajouté par NOUS !!!
+	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, ClassDeclaration classe) {
+			HierarchicalScope<Declaration> _paramScope = new SymbolTable(_scope);
+			
+			((SymbolTable) _paramScope).enregistre("this", classe);
+			System.out.println("OOOOOOOOOOOO - ScopeMéthode :");
+			System.out.println(_paramScope.toString());
+			
+			for (ParameterDeclaration param : this.parameters) {
+				if (_paramScope.accepts(param)) {
+					_paramScope.register(param);
+					// debug
+					System.out.println(param.getName() + " registered in parameter scope.");
+				} else {
+					Logger.error("Parameter : " + this.name + " is already defined.");
+              		return false;
+				}
+			}
+			return this.body.collectAndPartialResolve(_paramScope);
+      
+	}
+
+	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+		return this.body.completeResolve(_scope);
+	}
+
+	public int getParameterLenght(){
+		int taille = 0;
+		for (ParameterDeclaration p : parameters){
+			taille += p.getType().length();
+		} 
+
+		return taille;
+	} 
+
 
 }

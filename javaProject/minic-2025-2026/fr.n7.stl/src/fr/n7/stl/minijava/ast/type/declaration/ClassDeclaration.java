@@ -13,6 +13,7 @@ import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
+import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.minijava.ast.type.ClassType;
 import fr.n7.stl.tam.ast.Fragment;
@@ -69,7 +70,10 @@ public class ClassDeclaration implements Instruction, Declaration {
 			for (ClassElement elem : elements) {
 				if (elem instanceof MethodDeclaration cd) {
 					ok &= cd.collectAndPartialResolve(_scope, this);
-				}
+				} else if (elem instanceof ConstructorDeclaration cd) {
+					ok &= cd.collectAndPartialResolve(_scope, this);
+				} 
+					
 			}
 			return ok;
 			//PENSE AU METHODE ET ATTRIBUT QUE J'AI DECIDE DE PAS GERER ICI !!!!
@@ -95,6 +99,8 @@ public class ClassDeclaration implements Instruction, Declaration {
 		boolean ok = true;
 		for (ClassElement elem : elements) {
 			if (elem instanceof MethodDeclaration cd) {
+				ok &= cd.completeResolve(_scope);
+			} else if (elem instanceof ConstructorDeclaration cd) {
 				ok &= cd.completeResolve(_scope);
 			}
 			
@@ -174,15 +180,25 @@ public class ClassDeclaration implements Instruction, Declaration {
 		f.add(Library.MAlloc);
 
 		for (ClassElement elem : elements) {
-			int num = _factory.createLabelNumber();
+			
 			Fragment tmp = _factory.createFragment();
 			if (elem instanceof MethodDeclaration cd) {
+				int num = _factory.createLabelNumber();
 				tmp.append(cd.getBody().getCode(_factory));
+
+				//AJOUT D'UN RETURN POUR LES FCTS SANS RETOUR
+				if (cd.getType() == AtomicType.VoidType){
+					System.out.println("RETOUR VIDE");
+					tmp.add(_factory.createReturn(0, cd.getParameterLenght()));
+				} 
+
 				tmp.addPrefix(this.name + "_" + cd.getName()+"_"+num);
 				f.append(tmp);
 				cd.setLabel(this.name + "_" + cd.getName()+"_"+num);
 			} else if (elem instanceof ConstructorDeclaration cd) {
+				int num = _factory.createLabelNumber();
 				tmp.append(cd.getBody().getCode(_factory));
+				tmp.add(_factory.createReturn(0, cd.getParameterLenght()));
 				tmp.addPrefix(this.name +"_"+num);
 				f.append(tmp);
 				cd.setLabel(this.name +"_"+num);

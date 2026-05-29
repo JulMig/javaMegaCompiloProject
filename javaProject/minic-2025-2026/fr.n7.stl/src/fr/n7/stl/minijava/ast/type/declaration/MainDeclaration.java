@@ -81,8 +81,21 @@ public class MainDeclaration implements Instruction {
 
 	@Override
 	public Fragment getCode(TAMFactory _factory) {
-		// TODO Auto-generated method stub
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ClassDeclaration.");
+		
+		Fragment f = _factory.createFragment();
+
+		//AJOUTER LE CODE DES DECLARTIONS
+		System.out.println("//////////////////////");
+		System.out.println("Déclaration");
+		for(Declaration d : declarations){
+			System.out.println(" - " + d.toString());;
+		} 
+		System.out.println("//////////////////////");
+
+		f.append(main.getCode(_factory));
+
+		return f;
+		//throw new SemanticsUndefinedException( "Semantics getCode is undefined in MainDeclaration.");
 		//return null;
 	}
 	

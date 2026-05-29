@@ -1,10 +1,16 @@
 class A {
 	public int v;
+	public int s;
 	
 	public void setV(int _v) {
 		this.v = _v;
 	}
 	
+	public void setS(int _s) {
+		this.s = _s;
+	}
+	
+	/*
 	public int getV() {
 		return this.v;
 	}
@@ -12,9 +18,10 @@ class A {
 	public A() {
 		this( -1 );
 	}
-	
-	public A(int _v) {
+	*/
+	public A(int _v, int _s) {
 		this.v = _v;
+		this.s = _s;
 	}
 	
 }
@@ -47,10 +54,10 @@ public class Main {
 	}*/
 
 	public static void main(String[] args) {
-		/*
-		A a1 = new A();
-		A a2 = new A( 5 );
 		
+		//A a1 = new A();
+		A a2 = new A( 5, 3 );
+		/*
 		print a1.v;*/
 		
 		

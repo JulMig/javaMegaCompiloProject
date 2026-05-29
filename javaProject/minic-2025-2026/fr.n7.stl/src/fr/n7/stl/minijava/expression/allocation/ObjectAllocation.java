@@ -73,6 +73,8 @@ public class ObjectAllocation  implements AccessibleExpression, AssignableExpres
 	public Fragment getCode(TAMFactory _factory) {
 		// TODO Auto-generated method stub
 		
+		//RECUPERER CHAQUE ATTRIBUT
+
 		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ObjectAllocation.");
 		//return null;
 	}

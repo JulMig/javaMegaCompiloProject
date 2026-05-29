@@ -11,6 +11,8 @@ import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.scope.SymbolTable;
 import fr.n7.stl.minic.ast.type.Type;
+import fr.n7.stl.tam.ast.Fragment;
+import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
 
 public class MethodDeclaration  extends ClassElement {
@@ -126,5 +128,14 @@ public class MethodDeclaration  extends ClassElement {
 	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
 		return this.body.completeResolve(_scope);
 	}
+
+	public int getParameterLenght(){
+		int taille = 0;
+		for (ParameterDeclaration p : parameters){
+			taille += p.getType().length();
+		} 
+
+		return taille;
+	} 
 
 }
